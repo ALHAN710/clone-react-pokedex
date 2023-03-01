@@ -1,5 +1,6 @@
 {
   "name": "test-pokedex",
+  "author": "Pascal ALHADOUM",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -8,6 +9,7 @@
     "build": "tsc && vite build",
     "preview": "vite preview"
   },
+  "homepage": "https://alhan710.github.io/clone-react-pokedex/",
   "dependencies": {
     "@chakra-ui/react": "^2.5.1",
     "@emotion/react": "^11.10.6",
