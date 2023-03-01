@@ -1,6 +1,6 @@
 import React from "react";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { Stack, Wrap, WrapItem } from "@chakra-ui/react";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { Wrap, WrapItem } from "@chakra-ui/react";
 import PokedexSkeleton from "./PokedexSkeleton";
 import PokedexCard from "./PokedexCard";
 import { TPokemon } from "../types/@pokemon";
@@ -19,6 +19,8 @@ const PokedexCards: React.FC<Props> = ({ isFetching, setShowLoader }) => {
   const [url, setUrl] = React.useState(initUrl);
 
   const pokemonsQueryKey = ["pokemons"];
+
+  const queryClient = useQueryClient();
 
   const { status, data, refetch } = useQuery<any, Error, TPokemon[], string[]>({
     queryKey: pokemonsQueryKey,
@@ -51,27 +53,13 @@ const PokedexCards: React.FC<Props> = ({ isFetching, setShowLoader }) => {
     },
   });
 
-  // https://www.pokemon.com/fr/pokedex
-  const fetchData = async () => {
-    const nameP = "pikachu";
-    const response = await fetch(
-      // "https://pokeapi.co/api/v2/pokemon/?offset=0&limit=8"
-      "https://pokeapi.co/api/v2/pokemon/1/"
-      // `https://pokeapi.co/api/v2/pokemon-species/${nameP}`
-    );
-    if (response.ok) {
-      // console.log(result);
-      const result = await response.json();
-      console.log(result);
-      console.log(result.results);
-    }
-  };
-
   React.useEffect(() => {
-    fetchData();
-
-    return () => {};
-  }, []);
+    queryClient.setQueryData(pokemonsQueryKey, [...pokemons]);
+  
+    return () => {
+      
+    }
+  }, [pokemons]);
 
   // use the isFetching change value to launch the query for fetching a new pokemons
   React.useEffect(() => {
