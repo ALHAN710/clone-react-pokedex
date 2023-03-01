@@ -89,11 +89,11 @@ const ModalPokedexDetail: React.FC<Props> = ({}) => {
         </Heading>
         <Box as="section" py={"2rem"} px={"5px"} className="section">
           <Card
-            direction={{ base: "column", sm: "row" }}
+            direction={{ base: "column", sm: "column", md: "row" }}
             overflow="hidden"
             variant="outline"
           >
-            <Box bg="#F2F2F2" p="0.5rem" borderRadius="lg" w="50%">
+            <Box bg="#F2F2F2" p="0.5rem" borderRadius="lg" w={{ base: "50%", sm: "100%", md: "50%"}}>
               <Image
                 // src={"https://assets.pokemon.com/assets/cms2/img/pokedex/detail/085.png"}
                 src={`https://assets.pokemon.com/assets/cms2/img/pokedex/detail/${formatID(
@@ -103,7 +103,7 @@ const ModalPokedexDetail: React.FC<Props> = ({}) => {
                 alt={pokemon.name + " picture"}
                 w="100%"
                 // maxW={{ base: "100%", sm: "200px" }}
-                objectFit={"contain"}
+                objectFit={"cover"}
               />
             </Box>
 
