@@ -14,7 +14,7 @@ import { TPokemon } from "./types/@pokemon";
 const queryClient = new QueryClient();
 
 function App() {
-  const [first, setFirst] = React.useState(true);
+  const [first, setFirst] = React.useState<boolean | string>(true);
   const [showLoader, setShowLoader] = React.useState(false);
   
   // Get the modal state from the global state context api
@@ -34,8 +34,8 @@ function App() {
     // console.log(scrollTop, scrollHeight, clientHeight);
 
     if (clientHeight + scrollTop >= scrollHeight - 20) {
-      console.log("clientHeight + scrollTop = ", clientHeight + scrollTop);
-      console.log("scrollHeight = ", scrollHeight);
+      // console.log("clientHeight + scrollTop = ", clientHeight + scrollTop);
+      // console.log("scrollHeight = ", scrollHeight);
       setShowLoader(true);
       // addPoke(6);
     }
@@ -43,7 +43,7 @@ function App() {
 
   React.useEffect(() => {
     let scrollID: any;
-    if (!first) {
+    if (!first && !showLoader) {
       // Gestion du scroll infini
       scrollID = window.addEventListener("scroll", scrollListener);
     }
@@ -51,7 +51,7 @@ function App() {
     return () => {
       if(scrollID) window.removeEventListener("scroll", scrollListener);
     };
-  }, [first]);
+  }, [first, showLoader]);
 
   // console.log(first);
 
@@ -68,21 +68,23 @@ function App() {
           <Heading as={"h1"} mb="2rem" size={"2xl"}>
             Bienvenue dans le pokédex !
           </Heading>
+
           <Box as="section" py={"2rem"} px={"5px"} className="section">
-            {/* TODO: Put the pokedex list here and the skeleton if isloading first api call request */}
+            {/* The pokedex card list or skeleton if isloading first api call request */}
             <PokedexCards
               isFetching={showLoader}
               setShowLoader={setShowLoader}
+              setShowMoreButton={setFirst}
             />
 
-            {/* TODO: Place more pokedex button here which is visible only for the first call of pokedex api  */}
+            {/* Get More pokedex Button */}
             {first && (
               <Button colorScheme="linkedin" mb={"2rem"} onClick={handleClick}>
                 Charger d'autres pokémons
               </Button>
             )}
 
-            {/* TODO: Place loader pokedex here */}
+            {/* Loader pokedex */}
             {!first && showLoader && <Loader />}
           </Box>
         </Container>
